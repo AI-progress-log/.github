@@ -1,0 +1,1153 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mennatullah — Full Roadmap</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap');
+:root{
+  --bg:#0d0d0f;--surface:#141417;--surface2:#1c1c22;--border:#2a2a32;
+  --text:#e8e8f0;--muted:#6b6b80;--accent:#7c6dfa;
+  --p0:#4a90d9;--p1:#7c6dfa;--p2:#00d4aa;--p3:#ff6b6b;
+  --p4:#ffd166;--p5:#f77f00;--p6:#c77dff;
+  --sidebar:260px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.65;display:flex;}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  width:var(--sidebar);min-width:var(--sidebar);height:100vh;position:sticky;top:0;
+  background:var(--surface);border-right:1px solid var(--border);
+  overflow-y:auto;padding:24px 0;flex-shrink:0;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+.sb-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.sb-logo-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;}
+.sb-logo-name{font-size:15px;font-weight:700;color:var(--text);margin-top:4px;}
+
+.sb-section-label{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.15em;
+  color:var(--muted);text-transform:uppercase;padding:16px 20px 6px;
+}
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 20px;cursor:pointer;text-decoration:none;
+  font-size:12px;color:var(--muted);transition:all 0.15s;
+  border-left:2px solid transparent;
+}
+.sb-item:hover{color:var(--text);background:var(--surface2);}
+.sb-item.active{color:var(--text);border-left-color:var(--item-color,var(--accent));background:rgba(124,109,250,0.06);}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--item-color,var(--muted));flex-shrink:0;}
+.sb-sub{padding-left:36px;font-size:11px;color:var(--muted);}
+.sb-sub:hover{color:var(--text);}
+
+.sb-dep-note{
+  margin:12px 20px 0;padding:10px 12px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;font-size:10px;color:var(--muted);
+  font-family:'IBM Plex Mono',monospace;
+}
+.sb-dep-seq{color:var(--p3);}
+.sb-dep-par{color:var(--p2);}
+
+/* ── MAIN CONTENT ── */
+#content{flex:1;min-width:0;padding:0 48px 80px;max-width:960px;}
+
+/* ── PAGE HEADER ── */
+.page-header{padding:56px 0 40px;border-bottom:1px solid var(--border);margin-bottom:0;}
+.page-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.page-title{font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:12px;}
+.page-title span{color:var(--accent);}
+.page-sub{color:var(--muted);font-size:14px;max-width:560px;}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+.meta-pill{background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:5px 12px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+
+/* ── DEP MAP (top mini-graph) ── */
+.dep-map{
+  display:flex;align-items:center;gap:0;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:20px 24px;margin:32px 0;overflow-x:auto;
+}
+.dep-node{
+  display:flex;flex-direction:column;align-items:center;
+  background:var(--surface2);border:1px solid var(--node-color,var(--border));
+  border-radius:7px;padding:8px 14px;min-width:88px;
+  font-family:'IBM Plex Mono',monospace;
+}
+.dep-node-num{font-size:9px;letter-spacing:0.1em;color:var(--node-color,var(--muted));}
+.dep-node-name{font-size:10px;color:var(--text);font-weight:600;text-align:center;margin-top:2px;}
+.dep-node-time{font-size:9px;color:var(--muted);margin-top:1px;}
+.dep-arrow{font-size:16px;color:var(--p3);padding:0 6px;flex-shrink:0;}
+.dep-par-group{
+  display:flex;flex-direction:column;gap:8px;padding:0 4px;
+}
+.dep-par-label{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--p2);
+  letter-spacing:0.1em;text-align:center;padding:2px 0;
+}
+
+/* ── PHASE SECTION ── */
+.phase-section{padding-top:56px;}
+.phase-anchor{display:block;position:relative;top:-80px;visibility:hidden;}
+
+.phase-head{
+  display:flex;align-items:flex-start;gap:16px;
+  padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:8px;
+}
+.phase-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
+  letter-spacing:0.12em;padding:5px 10px;border-radius:4px;border:1px solid;
+  white-space:nowrap;margin-top:4px;flex-shrink:0;
+}
+.phase-title-text{font-size:22px;font-weight:700;}
+.phase-desc-text{color:var(--muted);font-size:13px;margin-top:3px;}
+
+/* phase color classes */
+.c0{color:var(--p0);border-color:var(--p0)!important;}
+.c1{color:var(--p1);border-color:var(--p1)!important;}
+.c2{color:var(--p2);border-color:var(--p2)!important;}
+.c3{color:var(--p3);border-color:var(--p3)!important;}
+.c4{color:var(--p4);border-color:var(--p4)!important;}
+.c5{color:var(--p5);border-color:var(--p5)!important;}
+.c6{color:var(--p6);border-color:var(--p6)!important;}
+
+/* dep indicator row */
+.dep-indicator{
+  display:flex;align-items:center;gap:12px;
+  background:var(--surface2);border-radius:6px;padding:10px 16px;
+  margin:16px 0 24px;font-size:12px;
+}
+.dep-seq-pill{
+  background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);
+  color:var(--p3);font-family:'IBM Plex Mono',monospace;font-size:10px;
+  padding:3px 9px;border-radius:3px;
+}
+.dep-par-pill{
+  background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);
+  color:var(--p2);font-family:'IBM Plex Mono',monospace;font-size:10px;
+  padding:3px 9px;border-radius:3px;
+}
+.dep-text{color:var(--muted);font-size:12px;}
+
+/* ── CARDS GRID ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;}
+.cards.full{grid-template-columns:1fr;}
+
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:20px 22px;transition:border-color 0.15s;
+}
+.card:hover{border-color:var(--accent);}
+.card-label{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:8px;
+}
+.card h3{font-size:14px;font-weight:700;margin-bottom:8px;}
+.card p{font-size:12px;color:var(--muted);margin-bottom:12px;}
+
+/* resource list */
+.res-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.res-list li{display:flex;align-items:flex-start;gap:8px;font-size:12px;}
+.res-list a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.12s,border-color 0.12s;}
+.res-list a:hover{color:var(--accent);border-color:var(--accent);}
+
+.badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 6px;border-radius:3px;white-space:nowrap;margin-top:2px;flex-shrink:0;}
+.by{background:#00d4aa18;color:var(--p2);border:1px solid #00d4aa40;}   /* free/web */
+.byt{background:#ff6b6b18;color:#ff8585;border:1px solid #ff6b6b40;}    /* youtube */
+.bk{background:#7c6dfa18;color:#a599ff;border:1px solid #7c6dfa40;}     /* book */
+.bg{background:#ffd16618;color:#ffd166;border:1px solid #ffd16640;}     /* github */
+.bp{background:#4a90d918;color:#70b0f0;border:1px solid #4a90d940;}     /* paper */
+.bd{background:#c77dff18;color:#c77dff;border:1px solid #c77dff40;}     /* practice/build */
+
+/* topics */
+.topics{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.topic{background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:2px 7px;font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--muted);}
+
+/* sep */
+.sep{height:1px;background:var(--border);margin:10px 0;}
+
+/* focus banner */
+.banner{
+  background:var(--surface2);border:1px solid var(--border);
+  border-left:3px solid var(--p4);border-radius:8px;
+  padding:12px 16px;margin-bottom:18px;font-size:12px;
+}
+.banner strong{color:var(--p4);}
+.banner.par{border-left-color:var(--p2);}
+.banner.par strong{color:var(--p2);}
+
+/* ── PROJECT MILESTONE ── */
+.milestone{
+  margin:28px 0;padding:22px 24px;
+  background:linear-gradient(135deg,rgba(0,212,170,0.03),var(--surface));
+  border:1px solid var(--p2);border-radius:12px;position:relative;
+}
+.milestone-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:18px;
+  padding-bottom:14px;border-bottom:1px solid var(--border);
+}
+.milestone-icon{font-size:18px;}
+.milestone-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;color:var(--p2);text-transform:uppercase;}
+.milestone-title{font-size:16px;font-weight:700;color:var(--text);margin-top:2px;}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+
+.proj{
+  background:var(--bg);border:1px solid var(--border);border-radius:9px;
+  padding:16px 18px;position:relative;overflow:hidden;
+  transition:border-color 0.2s;
+}
+.proj::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--pc,var(--p2));}
+.proj:hover{border-color:var(--pc,var(--p2));}
+.proj-num{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:5px;}
+.proj-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.proj-hook{font-size:11px;color:var(--muted);font-style:italic;margin-bottom:10px;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.ptag{font-size:9px;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:3px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+.proj-what{font-size:11px;color:#b0b0c8;margin-bottom:8px;}
+.proj-what strong{color:var(--text);}
+.proj-skills{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.sk{font-size:10px;padding:2px 7px;border-radius:3px;background:rgba(124,109,250,0.08);border:1px solid rgba(124,109,250,0.2);color:var(--p1);}
+.wow{margin-top:8px;padding:7px 10px;background:rgba(255,209,102,0.05);border-left:2px solid var(--p4);border-radius:0 5px 5px 0;font-size:10px;color:var(--p4);}
+
+/* ── FOOTER ── */
+.page-footer{
+  border-top:1px solid var(--border);padding:32px 0 0;
+  margin-top:60px;color:var(--muted);font-size:12px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+
+@media(max-width:860px){
+  #sidebar{display:none;}
+  #content{padding:0 20px 60px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<nav id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-tag">// roadmap</div>
+    <div class="sb-logo-name">Mennatullah</div>
+  </div>
+
+  <div class="sb-dep-note">
+    <div class="sb-dep-seq">→ sequential</div>
+    <div class="sb-dep-par">⇉ parallel</div>
+    <div style="margin-top:6px;font-size:9px;">🔥 = project milestone</div>
+  </div>
+
+  <div class="sb-section-label">Parallel Track A</div>
+  <a href="#p0" class="sb-item" style="--item-color:var(--p0)"><div class="sb-dot" style="background:var(--p0)"></div>P00 · Python + SWE</a>
+  <a href="#p2" class="sb-item sb-sub" style="--item-color:var(--p2)"><div class="sb-dot" style="background:var(--p2)"></div>P02 · Math (parallel)</a>
+
+  <div class="sb-section-label">Parallel Track B</div>
+  <a href="#p1" class="sb-item" style="--item-color:var(--p1)"><div class="sb-dot" style="background:var(--p1)"></div>P01 · DSA</a>
+  <a href="#p4" class="sb-item sb-sub" style="--item-color:var(--p4)"><div class="sb-dot" style="background:var(--p4)"></div>P04 · SWE Backend (parallel)</a>
+
+  <div class="sb-section-label">Sequential</div>
+  <a href="#p3" class="sb-item" style="--item-color:var(--p3)"><div class="sb-dot" style="background:var(--p3)"></div>P03 · ML + DL</a>
+  <a href="#p5" class="sb-item" style="--item-color:var(--p5)"><div class="sb-dot" style="background:var(--p5)"></div>P05 · NLP + LLMs</a>
+  <a href="#p6" class="sb-item" style="--item-color:var(--p6)"><div class="sb-dot" style="background:var(--p6)"></div>P06 · Agentic AI</a>
+
+  <div class="sb-section-label">Ongoing Forever</div>
+  <a href="#ongoing" class="sb-item" style="--item-color:var(--p1)"><div class="sb-dot" style="background:var(--p1);opacity:0.5"></div>LeetCode Daily</a>
+
+  <div style="padding:20px;margin-top:8px;border-top:1px solid var(--border);">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;">TOTAL ESTIMATE</div>
+    <div style="font-size:11px;color:var(--text);">~160 hrs study</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:3px;">3–4 months @ 2 hrs/day</div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ CONTENT ═══════════════════ -->
+<div id="content">
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="page-tag">// personal roadmap · 2025–2026</div>
+  <div class="page-title">Zero to <span>Superhero</span><br>AI + SWE Roadmap</div>
+  <div class="page-sub">One complete pass. No backtracking. PyTorch-native. All free. Target: Agentic AI / NLP Engineer.</div>
+  <div class="meta-row">
+    <span class="meta-pill">~160 hrs</span>
+    <span class="meta-pill">7 phases</span>
+    <span class="meta-pill">17 projects</span>
+    <span class="meta-pill">PyTorch native</span>
+    <span class="meta-pill">100% free resources</span>
+  </div>
+</div>
+
+<!-- DEPENDENCY MAP -->
+<div class="dep-map">
+  <div class="dep-par-group">
+    <div class="dep-par-label">⇉ START PARALLEL</div>
+    <div class="dep-node" style="--node-color:var(--p0)">
+      <div class="dep-node-num">P00</div>
+      <div class="dep-node-name">Python SWE</div>
+      <div class="dep-node-time">~25 hrs</div>
+    </div>
+    <div class="dep-node" style="--node-color:var(--p2)">
+      <div class="dep-node-num">P02</div>
+      <div class="dep-node-name">Math / Stats</div>
+      <div class="dep-node-time">~15 hrs</div>
+    </div>
+  </div>
+  <div class="dep-arrow">→</div>
+  <div class="dep-par-group">
+    <div class="dep-par-label">⇉ PARALLEL</div>
+    <div class="dep-node" style="--node-color:var(--p1)">
+      <div class="dep-node-num">P01</div>
+      <div class="dep-node-name">DSA</div>
+      <div class="dep-node-time">~20 hrs</div>
+    </div>
+    <div class="dep-node" style="--node-color:var(--p4)">
+      <div class="dep-node-num">P04</div>
+      <div class="dep-node-name">Backend SWE</div>
+      <div class="dep-node-time">~30 hrs</div>
+    </div>
+  </div>
+  <div class="dep-arrow">→</div>
+  <div class="dep-node" style="--node-color:var(--p3)">
+    <div class="dep-node-num">P03</div>
+    <div class="dep-node-name">ML + DL</div>
+    <div class="dep-node-time">~40 hrs</div>
+  </div>
+  <div class="dep-arrow">→</div>
+  <div class="dep-node" style="--node-color:var(--p5)">
+    <div class="dep-node-num">P05</div>
+    <div class="dep-node-name">NLP + LLMs</div>
+    <div class="dep-node-time">~35 hrs</div>
+  </div>
+  <div class="dep-arrow">→</div>
+  <div class="dep-node" style="--node-color:var(--p6)">
+    <div class="dep-node-num">P06</div>
+    <div class="dep-node-name">Agentic AI</div>
+    <div class="dep-node-time">~30 hrs</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     P00 + P02 — PARALLEL BLOCK
+══════════════════════════════════ -->
+<div style="background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.2);border-radius:12px;padding:24px;margin-top:40px;">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--p2);letter-spacing:0.15em;margin-bottom:4px;">⇉ PARALLEL BLOCK — START BOTH ON DAY 1</div>
+  <div style="font-size:12px;color:var(--muted);">Do P00 and P02 simultaneously. They don't depend on each other. Finish both before moving to the next block.</div>
+</div>
+
+<!-- P00 -->
+<div class="phase-section">
+  <span class="phase-anchor" id="p0"></span>
+  <div class="phase-head">
+    <div><span class="phase-badge c0">PHASE 00</span></div>
+    <div>
+      <div class="phase-title-text" style="color:var(--p0)">Python Mastery + SWE Foundations</div>
+      <div class="phase-desc-text">Programming fundamentals → engineering-grade Python → clean code → Git · ~25 hrs · skim fast</div>
+    </div>
+  </div>
+  <div class="dep-indicator">
+    <span class="dep-par-pill">⇉ PARALLEL with P02</span>
+    <span class="dep-text">No prerequisites. Start on day 1.</span>
+  </div>
+  <div class="banner"><strong>Why start here even if you've coded before:</strong> Months of CV + diffusion model work can dull basic Python muscle memory. Skim fast — stop only where something surprises you.</div>
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">0.1 · Core Python — Engineering Style</p>
+      <h3>Corey Schafer Python Series</h3>
+      <p>Variables → OOP → async/await → decorators → context managers → generators → typing. Stop only where surprised.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PL-osiE80TeTskrapNbzXhwoFUiLCjGgY7" target="_blank">Python Tutorials — Corey Schafer (full playlist)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=OSGv2VnC0go" target="_blank">Transforming Code into Idiomatic Python — R. Hettinger</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=EiOglTERPEo" target="_blank">Super() Considered Super! — PyCon 2015</a></li>
+      </ul>
+      <div class="sep"></div>
+      <div class="topics">
+        <span class="topic">asyncio / await</span><span class="topic">decorators</span><span class="topic">dataclasses</span>
+        <span class="topic">typing / Annotated</span><span class="topic">context managers</span><span class="topic">generators</span>
+      </div>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=t5Bo1Je9EmE" target="_blank">Python AsyncIO Full Tutorial — Tech With Tim</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://docs.pydantic.dev/latest/" target="_blank">Pydantic V2 Official Docs</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=cHYq1MRoyI0" target="_blank">pytest Full Course — freeCodeCamp</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">0.2 · Clean Code + Design Patterns</p>
+      <h3>Writing Code That Doesn't Rot</h3>
+      <p>SOLID principles, design patterns, and readable architecture. Non-negotiable for AI engineers who also ship backends.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLlsmxlJgn1HJpa28yHzkBmUY-Ty71ZUGc" target="_blank">SOLID Principles — ArjanCodes (Python-native)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/@ArjanCodes" target="_blank">ArjanCodes Channel — Design Patterns in Python</a></li>
+        <li><span class="badge bk">WEB</span><a href="https://refactoring.guru/design-patterns/python" target="_blank">Refactoring.Guru — Design Patterns (free)</a></li>
+      </ul>
+      <div class="topics"><span class="topic">SOLID</span><span class="topic">Factory</span><span class="topic">Strategy</span><span class="topic">Observer</span><span class="topic">DI</span></div>
+    </div>
+    <div class="card">
+      <p class="card-label">0.3 · Version Control</p>
+      <h3>Git — Full Picture</h3>
+      <p>Beyond git add/commit. Branching strategies, rebasing, conflict resolution, GitHub workflows.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/Q6G-J54vgKc" target="_blank">Git & GitHub Crash Course — Traversy Media</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtube.com/playlist?list=PLDoPjvoNmBAw4eOj58MZPakHjaO3frVMF" target="_blank">Git Full Playlist</a></li>
+        <li><span class="badge by">WEB</span><a href="https://learngitbranching.js.org/" target="_blank">Learn Git Branching — Interactive (do this)</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- P00 PROJECT MILESTONE -->
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · P00</div>
+        <div class="milestone-title">Ship something that uses real async + clean architecture</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p0)">
+        <div class="proj-num">P00.1</div>
+        <div class="proj-title">Async GitHub Org Analyzer</div>
+        <div class="proj-hook">Scan a GitHub org concurrently — repo health, commit activity, language breakdown. Takes seconds, not minutes.</div>
+        <div class="proj-tags"><span class="ptag">asyncio</span><span class="ptag">aiohttp</span><span class="ptag">GitHub API</span><span class="ptag">rate limiting</span></div>
+        <div class="proj-what"><strong>Build:</strong> Given an org name, concurrently fetch all repos, their commit activity, open issues, and language breakdown using async/await + aiohttp. Output a rich terminal table. Handle pagination and rate limits.</div>
+        <div class="proj-skills"><span class="sk">asyncio.gather</span><span class="sk">semaphores</span><span class="sk">pagination</span><span class="sk">retry logic</span></div>
+        <div class="wow">⚡ Forces you to actually understand event loops — not just copy async syntax.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p0)">
+        <div class="proj-num">P00.2</div>
+        <div class="proj-title">CLI Music Metadata Tagger</div>
+        <div class="proj-hook">Tag, rename, and organize your entire music library using Python file I/O, argparse, and ID3 parsing.</div>
+        <div class="proj-tags"><span class="ptag">file I/O</span><span class="ptag">OOP</span><span class="ptag">argparse</span><span class="ptag">mutagen</span></div>
+        <div class="proj-what"><strong>Build:</strong> CLI that reads audio files, fetches metadata from MusicBrainz API, auto-renames by artist/album/track, creates tidy folder structure. Handle corrupted files, missing fields, duplicates.</div>
+        <div class="proj-skills"><span class="sk">pathlib</span><span class="sk">dataclasses</span><span class="sk">requests</span><span class="sk">error handling</span></div>
+        <div class="wow">⚡ 5,000+ song libraries get organized in seconds. You'll actually use this tool.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P02 -->
+<div class="phase-section">
+  <span class="phase-anchor" id="p2"></span>
+  <div class="phase-head">
+    <div><span class="phase-badge c2">PHASE 02</span></div>
+    <div>
+      <div class="phase-title-text" style="color:var(--p2)">Math for AI — Targeted & Intuition-First</div>
+      <div class="phase-desc-text">Calc gaps (chain rule only) · Probability & Stats — your main gap · ~15 hrs</div>
+    </div>
+  </div>
+  <div class="dep-indicator">
+    <span class="dep-par-pill">⇉ PARALLEL with P00</span>
+    <span class="dep-text">No prerequisites. Start on day 1 alongside P00.</span>
+  </div>
+  <div class="banner par"><strong>Your situation:</strong> 3B1B linear algebra ✓, 3B1B calculus ✓. Skip linear algebra entirely. Do 2 calculus videos only. Heavy focus on probability + stats integrated into ML — the way StatQuest teaches it.</div>
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">2.1 · Linear Algebra — SKIP</p>
+      <h3>Already Covered via 3B1B ✓</h3>
+      <p>Only come back if you hit SVD or eigenvectors in context and feel lost — then one 3B1B video, not a course.</p>
+      <ul class="res-list"><li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank">3B1B — Essence of Linear Algebra (reference only)</a></li></ul>
+    </div>
+    <div class="card">
+      <p class="card-label">2.2 · Calculus — 2 Videos Only</p>
+      <h3>Chain Rule, Gradients, Partial Derivatives</h3>
+      <p>Only the calculus that shows up in backprop. Watch these two if those concepts feel foggy.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=9vKqVkMQHKk" target="_blank">3B1B — Derivatives & Chain Rule</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=IHZwWFHWa-w" target="_blank">3B1B — Gradient Descent & Multivariable Calculus</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">2.3 · Probability & Stats — MAIN FOCUS</p>
+      <h3>StatQuest Statistics Fundamentals</h3>
+      <p>This is your actual math gap. Every concept is immediately tied to an ML use case. Work through the playlist top to bottom.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9" target="_blank">StatQuest — Statistics Fundamentals (full playlist)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=_IgyaD7vOOA" target="_blank">StatQuest — Conditional Probability (Bayes)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=XepXtl9YKwc" target="_blank">StatQuest — Maximum Likelihood (MLE)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=pYxNSUDSFH4" target="_blank">StatQuest — Probability vs Likelihood</a></li>
+      </ul>
+      <div class="topics">
+        <span class="topic">Probability Distributions</span><span class="topic">Bayes Theorem</span>
+        <span class="topic">MLE / MAP</span><span class="topic">Entropy</span><span class="topic">p-values</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · P02</div>
+        <div class="milestone-title">Prove you understand probability — build it from scratch</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p2)">
+        <div class="proj-num">P02.1</div>
+        <div class="proj-title">Bayesian Spam Filter — No sklearn</div>
+        <div class="proj-hook">Build Naive Bayes spam detection using only NumPy + probability theory. No ML libraries allowed.</div>
+        <div class="proj-tags"><span class="ptag">Bayes theorem</span><span class="ptag">MLE</span><span class="ptag">log-prob</span><span class="ptag">NumPy</span></div>
+        <div class="proj-what"><strong>Build:</strong> Train on Enron email corpus. Implement log-probability (avoid underflow), Laplace smoothing, word frequency visualization. Compare your impl vs sklearn's BernoulliNB — they should match exactly.</div>
+        <div class="proj-skills"><span class="sk">conditional probability</span><span class="sk">MLE estimation</span><span class="sk">numerical stability</span></div>
+        <div class="wow">⚡ When Bayes theorem becomes code you wrote, it stops being an abstract formula forever.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARALLEL BLOCK 2 -->
+<div style="background:rgba(124,109,250,0.04);border:1px solid rgba(124,109,250,0.2);border-radius:12px;padding:24px;margin-top:48px;">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--p1);letter-spacing:0.15em;margin-bottom:4px;">⇉ PARALLEL BLOCK 2 — START BOTH AFTER P00 + P02</div>
+  <div style="font-size:12px;color:var(--muted);">Run P01 (DSA) and P04 (Backend SWE) simultaneously. They complement each other perfectly — your API skills reinforce DSA problem-solving and vice versa.</div>
+</div>
+
+<!-- P01 -->
+<div class="phase-section">
+  <span class="phase-anchor" id="p1"></span>
+  <div class="phase-head">
+    <div><span class="phase-badge c1">PHASE 01</span></div>
+    <div>
+      <div class="phase-title-text" style="color:var(--p1)">Data Structures, Algorithms & Problem Solving</div>
+      <div class="phase-desc-text">From arrays to graphs to DP. The part that rusts fastest. · ~20 hrs study + 15 min daily forever</div>
+    </div>
+  </div>
+  <div class="dep-indicator">
+    <span class="dep-par-pill">⇉ PARALLEL with P04</span>
+    <span class="dep-seq-pill">→ AFTER P00 + P02</span>
+    <span class="dep-text">LeetCode continues as background track for the entire roadmap.</span>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">1.1 · Core Curriculum</p>
+      <h3>DSA — Zero to Interview-Ready</h3>
+      <p>NeetCode's structured approach + Abdul Bari for theory. Pattern-based, not random grinding.</p>
+      <ul class="res-list">
+        <li><span class="badge by">WEB</span><a href="https://neetcode.io/courses/dsa-for-beginners/0" target="_blank">NeetCode — DSA for Beginners (free course)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/c/AbdulBari" target="_blank">Abdul Bari — Algorithms (best theory on YouTube)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/@WilliamFiset" target="_blank">William Fiset — Data Structures (visual)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">1.2 · Practice Platform</p>
+      <h3>NeetCode 150 — Pattern-Based</h3>
+      <p>One pattern at a time. Sliding window → trees → graphs → DP. Never grind randomly.</p>
+      <ul class="res-list">
+        <li><span class="badge by">WEB</span><a href="https://neetcode.io/practice" target="_blank">NeetCode 150 — Structured problem set</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/@NeetCode" target="_blank">NeetCode YouTube — Video editorial every problem</a></li>
+        <li><span class="badge by">WEB</span><a href="https://leetcode.com/" target="_blank">LeetCode — Solve alongside NeetCode list</a></li>
+      </ul>
+      <div class="topics">
+        <span class="topic">Arrays</span><span class="topic">Two Pointers</span><span class="topic">Sliding Window</span>
+        <span class="topic">Binary Search</span><span class="topic">Trees</span><span class="topic">Graphs / BFS / DFS</span><span class="topic">DP</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · P01</div>
+        <div class="milestone-title">DSA in the real world — not toy problems</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p1)">
+        <div class="proj-num">P01.1</div>
+        <div class="proj-title">Cairo Metro Route Planner</div>
+        <div class="proj-hook">Dijkstra + BFS on the actual Cairo metro graph. Shortest path, min transfers, trip time — served as an API.</div>
+        <div class="proj-tags"><span class="ptag">graphs</span><span class="ptag">Dijkstra</span><span class="ptag">BFS</span><span class="ptag">FastAPI</span></div>
+        <div class="proj-what"><strong>Build:</strong> Model Cairo metro lines as a weighted graph. Implement Dijkstra + min-transfer variant. Add time penalty for transfers. Expose as FastAPI: "from Helwan to Shubra" → path + time + transfers. Compare Dijkstra vs A*.</div>
+        <div class="proj-skills"><span class="sk">adjacency lists</span><span class="sk">priority queues</span><span class="sk">multi-criteria search</span></div>
+        <div class="wow">⚡ Local + actually useful. Real data, real problem space, real users.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p1)">
+        <div class="proj-num">P01.2</div>
+        <div class="proj-title">Autocomplete Engine</div>
+        <div class="proj-hook">Build the autocomplete behind every search bar — Trie + frequency ranking + edit distance typo correction.</div>
+        <div class="proj-tags"><span class="ptag">Trie</span><span class="ptag">heaps</span><span class="ptag">DP</span><span class="ptag">edit distance</span></div>
+        <div class="proj-what"><strong>Build:</strong> Trie with frequency tracking for top-k suggestions. Levenshtein distance for typo correction (DP). FastAPI endpoint. Load Wikipedia titles or Arabic word corpus for real-world feel.</div>
+        <div class="proj-skills"><span class="sk">Trie</span><span class="sk">DP memoization</span><span class="sk">top-k heaps</span></div>
+        <div class="wow">⚡ This is literally what Google Search uses. You'll understand every character you type differently.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P04 -->
+<div class="phase-section">
+  <span class="phase-anchor" id="p4"></span>
+  <div class="phase-head">
+    <div><span class="phase-badge c4">PHASE 04</span></div>
+    <div>
+      <div class="phase-title-text" style="color:var(--p4)">Software Engineering — Backend, Databases, DevOps</div>
+      <div class="phase-desc-text">FastAPI · SQL/NoSQL · Docker · CI/CD · System Design · Monitoring · ~30 hrs</div>
+    </div>
+  </div>
+  <div class="dep-indicator">
+    <span class="dep-par-pill">⇉ PARALLEL with P01</span>
+    <span class="dep-seq-pill">→ AFTER P00 + P02</span>
+    <span class="dep-text">These skills separate "AI researcher" from "AI engineer who ships."</span>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">4.1 · APIs</p>
+      <h3>FastAPI — Complete Course</h3>
+      <p>Official docs read like a book — best structured resource. Covers SQLAlchemy, auth, async, deployment.</p>
+      <ul class="res-list">
+        <li><span class="badge by">DOCS</span><a href="https://fastapi.tiangolo.com/learn/" target="_blank">FastAPI Official Tutorial (book-style course)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=tLKKmouUams" target="_blank">FastAPI Full Course — freeCodeCamp</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=VirndPTeRaw" target="_blank">FastAPI Tutorial for Beginners – Full Course 2025</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">4.2 · Databases</p>
+      <h3>SQL (PostgreSQL) + NoSQL (MongoDB)</h3>
+      <p>SQL is non-negotiable for production AI. MongoDB for document-heavy agent memory stores.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=qw--VYLpxG4" target="_blank">PostgreSQL Full Course — freeCodeCamp</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=Www6cTUymCY" target="_blank">MongoDB Crash Course — Traversy Media</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">4.3 · Docker + Containers</p>
+      <h3>Docker — Production Grade</h3>
+      <p>Multi-stage builds, Docker Compose (FastAPI + Postgres + Redis), health checks. TechWorld with Nana is the best free option.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=3c-iBn73dDE" target="_blank">Docker Full Course — TechWorld with Nana (covers Compose)</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://docs.docker.com/build/building/multi-stage/" target="_blank">Docker — Multi-Stage Builds (smaller ML images)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/PrusdhS2lmo" target="_blank">Containerization (from original roadmap)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">4.4 · CI/CD</p>
+      <h3>GitLab CI/CD + GitHub Actions</h3>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=qP8kir2GUgo" target="_blank">GitLab CI/CD Full Course — TechWorld with Nana</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=R8_veQiYBjI" target="_blank">GitHub Actions Tutorial — TechWorld with Nana</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">4.5 · Monitoring</p>
+      <h3>Prometheus + Grafana</h3>
+      <p>Instrument a FastAPI app, build dashboards for latency, throughput, error rates.</p>
+      <ul class="res-list"><li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=h4Sl21AKiDg" target="_blank">Prometheus + Grafana Tutorial — TechWorld with Nana</a></li></ul>
+    </div>
+    <div class="card">
+      <p class="card-label">4.6 · System Design</p>
+      <h3>Scalable Systems — Concepts to Architecture</h3>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX" target="_blank">Gaurav Sen — System Design Playlist (30+ videos)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/@ByteByteGo" target="_blank">ByteByteGo — Visual deep dives</a></li>
+        <li><span class="badge bg">GITHUB</span><a href="https://github.com/donnemartin/system-design-primer" target="_blank">System Design Primer — donnemartin</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · P04</div>
+        <div class="milestone-title">Build infrastructure that would survive production</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p4)">
+        <div class="proj-num">P04.1</div>
+        <div class="proj-title">AI Model Serving Platform (Mini MLflow)</div>
+        <div class="proj-hook">Build your own ML model registry + serving platform — understand what MLflow actually does under the hood.</div>
+        <div class="proj-tags"><span class="ptag">FastAPI</span><span class="ptag">PostgreSQL</span><span class="ptag">Docker Compose</span><span class="ptag">Redis</span><span class="ptag">CI/CD</span></div>
+        <div class="proj-what"><strong>Build:</strong> Upload PyTorch model → register with version + metadata → serve at /predict/{model}/{version} → cache repeat predictions in Redis → query history from Postgres. GitHub Actions: auto-test + Docker build on PR. Prometheus metrics for inference latency.</div>
+        <div class="proj-skills"><span class="sk">REST API design</span><span class="sk">SQLAlchemy</span><span class="sk">Docker Compose</span><span class="sk">caching</span><span class="sk">CI/CD</span></div>
+        <div class="wow">⚡ After this, you'll understand MLflow, W&B, and BentoML without ever reading their intros.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p4)">
+        <div class="proj-num">P04.2</div>
+        <div class="proj-title">Real-Time Sentiment Monitoring Dashboard</div>
+        <div class="proj-hook">Stream Reddit/news data, classify sentiment live, push to Grafana — a real-time AI monitoring pipeline.</div>
+        <div class="proj-tags"><span class="ptag">WebSockets</span><span class="ptag">streaming</span><span class="ptag">Prometheus</span><span class="ptag">Grafana</span></div>
+        <div class="proj-what"><strong>Build:</strong> Stream posts via Reddit API → fast sentiment classifier (VADER or distilBERT) → push metrics per topic per minute to Prometheus → live Grafana dashboard. Alert when topic sentiment drops sharply (e.g. stock sentiment crash).</div>
+        <div class="proj-skills"><span class="sk">async streaming</span><span class="sk">custom Prometheus metrics</span><span class="sk">Grafana alerts</span></div>
+        <div class="wow">⚡ This is what news agencies and trading firms actually build for signal detection.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEQUENTIAL BLOCK -->
+<div style="background:rgba(255,107,107,0.04);border:1px solid rgba(255,107,107,0.2);border-radius:12px;padding:24px;margin-top:48px;">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--p3);letter-spacing:0.15em;margin-bottom:4px;">→ SEQUENTIAL FROM HERE — FULL DEPTH, NO MULTITASKING</div>
+  <div style="font-size:12px;color:var(--muted);">P03 → P05 → P06 must happen in order. Each phase builds directly on the previous. Don't rush. Projects after each sub-section.</div>
+</div>
+
+<!-- P03 -->
+<div class="phase-section">
+  <span class="phase-anchor" id="p3"></span>
+  <div class="phase-head">
+    <div><span class="phase-badge c3">PHASE 03</span></div>
+    <div>
+      <div class="phase-title-text" style="color:var(--p3)">Machine Learning + Deep Learning (PyTorch-Native)</div>
+      <div class="phase-desc-text">ML algorithms → DL from scratch → PyTorch mastery · ~40 hrs · full depth, code everything</div>
+    </div>
+  </div>
+  <div class="dep-indicator">
+    <span class="dep-seq-pill">→ SEQUENTIAL</span>
+    <span class="dep-text">Requires P01 + P02 + P04 complete. Deepest phase — do not parallel anything here.</span>
+  </div>
+  <div class="banner"><strong>No Andrew Ng, no TensorFlow.</strong> StatQuest replaces Andrew Ng for ML theory. Karpathy replaces Deep Learning A-Z for DL. Both are PyTorch-first and genuinely superior.</div>
+
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">3.1 · ML Algorithms — Theory</p>
+      <h3>StatQuest Machine Learning Playlist</h3>
+      <p>Every classical ML algorithm explained with statistical intuition. Do the Stats Fundamentals phase first, then this.</p>
+      <ul class="res-list"><li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF" target="_blank">StatQuest — Machine Learning (full playlist)</a></li></ul>
+      <div class="topics"><span class="topic">Linear / Logistic Regression</span><span class="topic">Decision Trees</span><span class="topic">Random Forests</span><span class="topic">XGBoost</span><span class="topic">SVM</span><span class="topic">K-Means</span><span class="topic">PCA</span><span class="topic">Bias-Variance</span><span class="topic">ROC/AUC</span></div>
+    </div>
+    <div class="card">
+      <p class="card-label">3.2 · ML Algorithms — Practice</p>
+      <h3>Codebasics ML with Python</h3>
+      <p>Hands-on scikit-learn implementation for every algorithm. Run alongside StatQuest so theory + code stay in sync.</p>
+      <ul class="res-list"><li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLeo1K3hjS3uvCeTYTeyfe0-rN5r8zn9rw" target="_blank">Codebasics — ML Tutorial Python (full playlist)</a></li></ul>
+    </div>
+    <div class="card">
+      <p class="card-label">3.3 · Data Analysis Libraries</p>
+      <h3>NumPy, Pandas, Matplotlib, Seaborn</h3>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/9JUAPgtkKpI" target="_blank">NumPy Full Course</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/2uvysYbKdjM" target="_blank">Pandas Full Course</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/OZOOLe2imFo" target="_blank">Matplotlib Full Course</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/6GUZXDef2U0" target="_blank">Seaborn Full Course</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ML MILESTONE -->
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · ML</div>
+        <div class="milestone-title">ML on problems that actually matter</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p3)">
+        <div class="proj-num">P03.ML1</div>
+        <div class="proj-title">Egyptian Football Match Predictor</div>
+        <div class="proj-hook">Predict Egyptian Premier League results using scraped real match data — served as a live API.</div>
+        <div class="proj-tags"><span class="ptag">XGBoost</span><span class="ptag">scraping</span><span class="ptag">feature eng.</span><span class="ptag">FastAPI</span><span class="ptag">Docker</span></div>
+        <div class="proj-what"><strong>Build:</strong> Scrape EPL Egypt data → engineer features (form, H2H, home advantage) → XGBoost + RF comparison → FastAPI endpoint: two team names → win probability + key factors → Dockerize. Add SHAP values to explain predictions.</div>
+        <div class="proj-skills"><span class="sk">feature engineering</span><span class="sk">SHAP</span><span class="sk">model comparison</span><span class="sk">full pipeline</span></div>
+        <div class="wow">⚡ Full end-to-end ML pipeline in one shot. Scraped → cleaned → trained → served → Docker.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p3)">
+        <div class="proj-num">P03.ML2</div>
+        <div class="proj-title">Music Mood Clustering Engine</div>
+        <div class="proj-hook">Cluster 10,000 Spotify songs by mood using audio features — build your own mood radio without listening to them.</div>
+        <div class="proj-tags"><span class="ptag">K-Means</span><span class="ptag">PCA</span><span class="ptag">Spotify API</span><span class="ptag">t-SNE</span></div>
+        <div class="proj-what"><strong>Build:</strong> Pull Spotify audio features (energy, valence, danceability, tempo) via API → K-Means + PCA → t-SNE visualization → name clusters (late night, gym, study emerge naturally) → playlist generator: given a mood → 20 songs.</div>
+        <div class="proj-skills"><span class="sk">unsupervised learning</span><span class="sk">dimensionality reduction</span><span class="sk">API pagination</span><span class="sk">silhouette score</span></div>
+        <div class="wow">⚡ Unsupervised learning makes sense when the clusters are songs you recognize.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p3)">
+        <div class="proj-num">P03.ML3</div>
+        <div class="proj-title">Social Media Virality Predictor</div>
+        <div class="proj-hook">Predict if a post will go viral before it's posted — regression + classification on real engagement data.</div>
+        <div class="proj-tags"><span class="ptag">NLP features</span><span class="ptag">regression</span><span class="ptag">SMOTE</span><span class="ptag">ensemble</span></div>
+        <div class="proj-what"><strong>Build:</strong> Public Reddit engagement dataset → engineer features from text (sentiment, question marks, hashtag count) + metadata (time, follower count) → XGBoost regression for like count + classifier for viral/not → handle extreme class imbalance with SMOTE.</div>
+        <div class="proj-skills"><span class="sk">text feature engineering</span><span class="sk">class imbalance</span><span class="sk">threshold tuning</span></div>
+        <div class="wow">⚡ Teaches you WHY features matter more than algorithms. The real ML lesson.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DL sub-section -->
+  <div style="margin-top:36px">
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">3.4 · Deep Learning — From Scratch</p>
+      <h3>Karpathy — Neural Networks: Zero to Hero</h3>
+      <p>The single best DL resource on the internet. Builds backprop → MLP → attention → GPT from scratch in Python/PyTorch. Code everything.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank">Neural Networks: Zero to Hero — Karpathy (full playlist)</a></li>
+        <li><span class="badge bg">GITHUB</span><a href="https://github.com/karpathy/nn-zero-to-hero" target="_blank">nn-zero-to-hero — Code + exercises repo</a></li>
+      </ul>
+      <div class="topics"><span class="topic">Backprop from scratch</span><span class="topic">MLP</span><span class="topic">BatchNorm</span><span class="topic">Self-Attention</span><span class="topic">GPT from scratch</span><span class="topic">BPE tokenization</span></div>
+    </div>
+    <div class="card">
+      <p class="card-label">3.5 · PyTorch Mastery</p>
+      <h3>PyTorch for Deep Learning — freeCodeCamp</h3>
+      <p>Karpathy = understand every neuron. This = fluent in PyTorch API. 25 hrs covering datasets, dataloaders, training loops, transfer learning, deployment.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=V_xro1bcAuA" target="_blank">PyTorch for Deep Learning — freeCodeCamp (~25 hrs)</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://pytorch.org/tutorials/" target="_blank">PyTorch Official Tutorials (reference)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">3.6 · Deep Learning (Michigan)</p>
+      <h3>EECS 498 — DL for CV</h3>
+      <p>Goes deeper than most on CNNs, object detection, RNNs. PyTorch throughout. You watched this before — revisit targeted sections.</p>
+      <ul class="res-list"><li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r" target="_blank">EECS 498-007 — DL for CV, Justin Johnson (Michigan)</a></li></ul>
+    </div>
+  </div>
+  </div>
+
+  <!-- DL MILESTONE -->
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · DL</div>
+        <div class="milestone-title">Build every architecture — then understand why it works</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p3)">
+        <div class="proj-num">P03.DL1</div>
+        <div class="proj-title">Arabic Name Generator (Backprop by Hand)</div>
+        <div class="proj-hook">Train a character-level language model on Arabic names — implement backprop from scratch in NumPy first.</div>
+        <div class="proj-tags"><span class="ptag">character LM</span><span class="ptag">backprop from scratch</span><span class="ptag">NumPy</span><span class="ptag">MLP</span></div>
+        <div class="proj-what"><strong>Build:</strong> Follow Karpathy makemore but on Arabic name datasets. Full MLP in NumPy (no autograd). Then rebuild in PyTorch and compare. Extend to trigram model. Measure perplexity. Generate 100 names — how many sound real?</div>
+        <div class="proj-skills"><span class="sk">manual backprop</span><span class="sk">embedding tables</span><span class="sk">perplexity</span><span class="sk">Arabic Unicode</span></div>
+        <div class="wow">⚡ When you can do backprop by hand, you own neural networks — not just use them.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p3)">
+        <div class="proj-num">P03.DL2</div>
+        <div class="proj-title">Deepfake Audio Detector</div>
+        <div class="proj-hook">Spectrogram CNN that classifies audio clips as real human voice or AI-generated — test it on ElevenLabs output.</div>
+        <div class="proj-tags"><span class="ptag">spectrogram CNN</span><span class="ptag">librosa</span><span class="ptag">audio ML</span><span class="ptag">FastAPI</span></div>
+        <div class="proj-what"><strong>Build:</strong> ASVspoof 2019 dataset → Mel spectrograms → ResNet-18 classifier → mixup augmentation → FastAPI: upload audio → "real"/"synthetic" + confidence. Test on ElevenLabs-generated voices in the wild.</div>
+        <div class="proj-skills"><span class="sk">audio→image pipeline</span><span class="sk">librosa</span><span class="sk">spectrogram CNNs</span></div>
+        <div class="wow">⚡ AI-generated voice fraud is a billion-dollar problem. Your detector is an actual weapon against it.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p3)">
+        <div class="proj-num">P03.DL3</div>
+        <div class="proj-title">Crowd Density Estimator (Real-Time)</div>
+        <div class="proj-hook">Count people in dense crowds — public safety AI, not a toy dataset. Add a live webcam demo.</div>
+        <div class="proj-tags"><span class="ptag">CNN regression</span><span class="ptag">density maps</span><span class="ptag">transfer learning</span><span class="ptag">OpenCV</span></div>
+        <div class="proj-what"><strong>Build:</strong> ShanghaiTech dataset → VGG/ResNet backbone → pixel-level density map regression (not just count) → webcam demo: real-time crowd estimation with heatmap overlay via OpenCV.</div>
+        <div class="proj-skills"><span class="sk">regression with CNNs</span><span class="sk">density estimation</span><span class="sk">webcam inference</span><span class="sk">heatmap viz</span></div>
+        <div class="wow">⚡ This exact system is used in Hajj crowd management and stadium safety. Real stakes.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p3)">
+        <div class="proj-num">P03.DL4 · Capstone</div>
+        <div class="proj-title">Mini-GPT on Classical Arabic Text</div>
+        <div class="proj-hook">Train a tiny GPT on classical Arabic tafsir literature — then dismantle every attention head to understand what it learned.</div>
+        <div class="proj-tags"><span class="ptag">GPT from scratch</span><span class="ptag">Arabic text</span><span class="ptag">BPE</span><span class="ptag">nanoGPT</span></div>
+        <div class="proj-what"><strong>Build:</strong> nanoGPT on classical Arabic tafsir. Implement BPE tokenizer for Arabic. Vary context length, heads, embed dim — document what each change does to loss. Generate passages and compare to originals. Visualize attention patterns.</div>
+        <div class="proj-skills"><span class="sk">self-attention</span><span class="sk">BPE tokenization</span><span class="sk">GPT architecture</span><span class="sk">Arabic NLP</span></div>
+        <div class="wow">⚡ After this, no component of an LLM is a black box. Nothing.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P05 -->
+<div class="phase-section">
+  <span class="phase-anchor" id="p5"></span>
+  <div class="phase-head">
+    <div><span class="phase-badge c5">PHASE 05</span></div>
+    <div>
+      <div class="phase-title-text" style="color:var(--p5)">NLP + Transformers + LLMs (Core Specialization)</div>
+      <div class="phase-desc-text">Classical NLP → Transformers inside-out → LLMs → Fine-tuning mastery · ~35 hrs</div>
+    </div>
+  </div>
+  <div class="dep-indicator">
+    <span class="dep-seq-pill">→ SEQUENTIAL after P03</span>
+    <span class="dep-text">This + P06 = your professional identity. Don't rush.</span>
+  </div>
+  <div class="banner"><strong>This is your primary specialization.</strong> Every concept should stick. You've used transformers — now understand every weight, every head, every design decision.</div>
+
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">5.1 · NLP Foundations — Graduate Level</p>
+      <h3>Stanford CS224N</h3>
+      <p>Best NLP course on the internet. Watch targeted lectures only — not all 20.</p>
+      <ul class="res-list"><li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVx76" target="_blank">Stanford CS224N — NLP with Deep Learning (YouTube)</a></li></ul>
+      <p style="font-size:11px;margin-top:8px;"><strong style="color:var(--p4)">Order:</strong> L1–L4 → L8 → L9–L11 → L12–L13 → L14</p>
+      <div class="topics"><span class="topic">word2vec/GloVe</span><span class="topic">BPE/WordPiece</span><span class="topic">Attention</span><span class="topic">BERT pretraining</span><span class="topic">GPT-style LMs</span></div>
+    </div>
+    <div class="card">
+      <p class="card-label">5.2 · NLP — Hands-On</p>
+      <h3>Hugging Face NLP Course</h3>
+      <p>Chapters 1–7: tokenizers → pipelines → fine-tuning → custom datasets → token classification → summarization. Every chapter has Colab notebooks.</p>
+      <ul class="res-list">
+        <li><span class="badge by">WEB</span><a href="https://huggingface.co/learn/nlp-course/en/chapter0/1" target="_blank">HuggingFace NLP Course — Ch 1–7 (free, notebooks)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtube.com/playlist?list=PLZoTAELRMXVNNrHSKv36Lr3_156yCo6Nn" target="_blank">NLP Course playlist (from original roadmap)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">5.3 · Transformer Architecture — Deep</p>
+      <h3>Attention Is All You Need + Illustrated Transformer</h3>
+      <p>Read the paper slowly — you can understand all of it now. The visual explainer makes each component click.</p>
+      <ul class="res-list">
+        <li><span class="badge bp">PAPER</span><a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need (2017)</a></li>
+        <li><span class="badge by">WEB</span><a href="https://jalammar.github.io/illustrated-transformer/" target="_blank">The Illustrated Transformer — Jay Alammar</a></li>
+        <li><span class="badge by">WEB</span><a href="https://jalammar.github.io/illustrated-bert/" target="_blank">The Illustrated BERT — Jay Alammar</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PL5JZLxl_tFCd-ixMkn_CJPQhhQRFhZXjY" target="_blank">Transformer Architecture playlist (from roadmap)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/ISNdQcPhsts" target="_blank">Transformer From Scratch (from roadmap)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">5.4 · LLMs — Internals</p>
+      <h3>Karpathy LLM Intro + Raschka from Scratch</h3>
+      <p>Karpathy's 1hr video = best LLM overview. Raschka's GitHub book = build GPT-2 from scratch, every component.</p>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/zjkBMFhNj_g" target="_blank">Intro to Large Language Models — Karpathy (1 hr)</a></li>
+        <li><span class="badge bg">GITHUB</span><a href="https://github.com/rasbt/LLMs-from-scratch" target="_blank">Build an LLM From Scratch — Sebastian Raschka</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/b665B04CWkI" target="_blank">HuggingFace Crash Course (from roadmap)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/kSQcSzPyRIU" target="_blank">AboBakr — LLMs (from roadmap)</a></li>
+      </ul>
+      <div class="topics"><span class="topic">Scaling laws</span><span class="topic">KV Cache</span><span class="topic">RoPE</span><span class="topic">top-p/top-k</span><span class="topic">Quantization</span></div>
+    </div>
+    <div class="card">
+      <p class="card-label">5.5 · Fine-Tuning Mastery</p>
+      <h3>Beyond QLoRA — DPO, ORPO, Evaluation</h3>
+      <p>You've done QLoRA. Now formalize DPO (replacing RLHF), ORPO, LoRA rank selection, and evaluation.</p>
+      <ul class="res-list">
+        <li><span class="badge by">DOCS</span><a href="https://huggingface.co/docs/trl/index" target="_blank">HuggingFace TRL — SFT, DPO, PPO, ORPO with code</a></li>
+        <li><span class="badge by">WEB</span><a href="https://learn.deeplearning.ai/courses/finetuning-large-language-models" target="_blank">Fine-tuning LLMs — DeepLearning.AI (free, 1 hr)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/live/S9VHQhC3HPc" target="_blank">FineTune session (from roadmap)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtube.com/playlist?list=PLQxDHpeGU14BX9L83JMSoKHsdIjv98BGn" target="_blank">Finetuning playlist (from roadmap)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtube.com/playlist?list=PLZoTAELRMXVN9VbAx5I2VvloTtYmlApe3" target="_blank">Finetuning playlist 2 (from roadmap)</a></li>
+      </ul>
+      <div class="topics"><span class="topic">LoRA/QLoRA</span><span class="topic">DPO</span><span class="topic">ORPO</span><span class="topic">SFT</span><span class="topic">rank selection</span></div>
+    </div>
+    <div class="card">
+      <p class="card-label">5.6 · Prompt Engineering</p>
+      <h3>Systematic Prompting + LLM APIs</h3>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/A-sNuzZgY8g" target="_blank">Prompt Engineering — AboBakr (from roadmap)</a></li>
+        <li><span class="badge by">WEB</span><a href="https://learn.deeplearning.ai/courses/chatgpt-prompt-eng" target="_blank">Prompt Engineering for Developers — DeepLearning.AI</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic Prompt Engineering Guide</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">5.7 · MLOps for AI Engineers</p>
+      <h3>MLOps Zoomcamp + LLM Serving</h3>
+      <ul class="res-list">
+        <li><span class="badge bg">GITHUB</span><a href="https://github.com/DataTalksClub/mlops-zoomcamp" target="_blank">MLOps Zoomcamp — DataTalks.Club (free, full course)</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://docs.vllm.ai/en/latest/getting_started/quickstart.html" target="_blank">vLLM Quickstart — production LLM serving</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://ollama.com/docs" target="_blank">Ollama — local LLM serving for dev</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- NLP MILESTONE -->
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · P05 NLP + LLMs</div>
+        <div class="milestone-title">NLP problems that barely anyone is solving in Arabic</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p5)">
+        <div class="proj-num">P05.1</div>
+        <div class="proj-title">Arabic Dialect Identifier</div>
+        <div class="proj-hook">Identify Egyptian, Levantine, Gulf, Moroccan, MSA from text — a genuinely hard multilingual NLP problem.</div>
+        <div class="proj-tags"><span class="ptag">BERT fine-tune</span><span class="ptag">Arabic NLP</span><span class="ptag">multi-class</span><span class="ptag">AraBERT</span></div>
+        <div class="proj-what"><strong>Build:</strong> QADI/MADAR dataset → AraBERT fine-tune → Arabic preprocessing (diacritics, ligatures, hamza) → compare vs TF-IDF + classical ML → FastAPI: text → dialect + confidence → confusion matrix analysis.</div>
+        <div class="proj-skills"><span class="sk">Arabic tokenization</span><span class="sk">BERT fine-tuning</span><span class="sk">multilingual NLP</span></div>
+        <div class="wow">⚡ Almost no open-source Arabic dialect tools exist. You'd be contributing something real.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p5)">
+        <div class="proj-num">P05.2</div>
+        <div class="proj-title">Medical Report Summarizer + Hallucination Checker</div>
+        <div class="proj-hook">Summarize clinical reports AND verify the summary didn't hallucinate any facts — the hardest LLM challenge.</div>
+        <div class="proj-tags"><span class="ptag">QLoRA</span><span class="ptag">summarization</span><span class="ptag">NLI</span><span class="ptag">RAGAS</span></div>
+        <div class="proj-what"><strong>Build:</strong> PubMed notes → QLoRA fine-tune Mistral 7B → faithfulness checker (NLI model verifies each claim exists in source) → BERTScore + ROUGE + faithfulness rate → FastAPI: upload report → summary + hallucination flags.</div>
+        <div class="proj-skills"><span class="sk">QLoRA</span><span class="sk">NLI factuality</span><span class="sk">ROUGE/BERTScore</span><span class="sk">medical NLP</span></div>
+        <div class="wow">⚡ Healthcare AI is highest-value. Hallucination checking is the #1 unsolved LLM problem.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p5)">
+        <div class="proj-num">P05.3</div>
+        <div class="proj-title">DPO Fine-Tune: Teaching Polite Refusals</div>
+        <div class="proj-hook">Align a model to decline harmful requests gracefully — this is literally what Anthropic does at scale.</div>
+        <div class="proj-tags"><span class="ptag">DPO</span><span class="ptag">preference data</span><span class="ptag">alignment</span><span class="ptag">HF TRL</span></div>
+        <div class="proj-what"><strong>Build:</strong> Curate preference dataset (harmful prompt + bad response + good response) → DPO on Qwen/Mistral via TRL → evaluate: do harmful outputs decrease? Does benign performance hold? Compare DPO vs SFT — measure behavioral difference.</div>
+        <div class="proj-skills"><span class="sk">DPO objective</span><span class="sk">preference data curation</span><span class="sk">alignment evaluation</span></div>
+        <div class="wow">⚡ Understanding + running DPO = understanding how all frontier models are aligned. Cutting edge.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P06 -->
+<div class="phase-section">
+  <span class="phase-anchor" id="p6"></span>
+  <div class="phase-head">
+    <div><span class="phase-badge c6">PHASE 06</span></div>
+    <div>
+      <div class="phase-title-text" style="color:var(--p6)">RAG Systems + Agentic AI — Your Final Form</div>
+      <div class="phase-desc-text">RAG advanced → Agent papers → LangGraph → Multi-agent → Evaluation → Security · ~30 hrs</div>
+    </div>
+  </div>
+  <div class="dep-indicator">
+    <span class="dep-seq-pill">→ SEQUENTIAL after P05</span>
+    <span class="dep-text">You've already built agents. Now formalize the theory + add the production layer.</span>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <p class="card-label">6.1 · RAG — Zero to Advanced</p>
+      <h3>RAG from Scratch + Advanced Patterns</h3>
+      <ul class="res-list">
+        <li><span class="badge byt">YT</span><a href="https://youtube.com/playlist?list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj" target="_blank">AboBakr — RAG Systems (from roadmap)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/playlist?list=PLfaIDFEXuae2LXbO1_PKyVJiQ23ZztA0x" target="_blank">LangChain — RAG from Scratch (advanced playlist)</a></li>
+        <li><span class="badge by">WEB</span><a href="https://learn.deeplearning.ai/courses/building-evaluating-advanced-rag" target="_blank">Building & Evaluating Advanced RAG — DeepLearning.AI</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://docs.ragas.io/en/latest/" target="_blank">RAGAS — RAG evaluation framework docs</a></li>
+      </ul>
+      <div class="topics"><span class="topic">Chunking</span><span class="topic">Hybrid search</span><span class="topic">Reranking</span><span class="topic">HyDE</span><span class="topic">CRAG</span><span class="topic">Self-RAG</span></div>
+    </div>
+    <div class="card">
+      <p class="card-label">6.2 · Agent Theory — Papers</p>
+      <h3>The 4 Must-Read Agent Papers</h3>
+      <ul class="res-list">
+        <li><span class="badge bp">PAPER</span><a href="https://arxiv.org/abs/2210.03629" target="_blank">ReAct: Reason + Act (2022)</a></li>
+        <li><span class="badge bp">PAPER</span><a href="https://arxiv.org/abs/2303.11366" target="_blank">Reflexion: Verbal Reinforcement (2023)</a></li>
+        <li><span class="badge bp">PAPER</span><a href="https://arxiv.org/abs/2302.04761" target="_blank">Toolformer (2023)</a></li>
+        <li><span class="badge bp">PAPER</span><a href="https://arxiv.org/abs/2309.07864" target="_blank">LLM as Agent Survey (2023)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">6.3 · LangGraph — Production Orchestration</p>
+      <h3>LangGraph — Graph-Based Agent Workflows</h3>
+      <ul class="res-list">
+        <li><span class="badge by">DOCS</span><a href="https://langchain-ai.github.io/langgraph/concepts/" target="_blank">LangGraph Conceptual Docs</a></li>
+        <li><span class="badge by">WEB</span><a href="https://learn.deeplearning.ai/courses/ai-agents-in-langgraph" target="_blank">AI Agents in LangGraph — DeepLearning.AI (free)</a></li>
+        <li><span class="badge byt">YT</span><a href="https://www.youtube.com/watch?v=R-o_a6dvzQM" target="_blank">LangGraph Full Tutorial — LangChain</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/xekw62yQu14" target="_blank">Advanced AI Agents Tutorial (from roadmap)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">6.4 · Multi-Agent Systems</p>
+      <h3>CrewAI + AutoGen</h3>
+      <ul class="res-list">
+        <li><span class="badge by">WEB</span><a href="https://learn.deeplearning.ai/courses/multi-ai-agent-systems-with-crewai" target="_blank">Multi-AI Agent Systems — DeepLearning.AI (free)</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://docs.crewai.com/" target="_blank">CrewAI Documentation</a></li>
+        <li><span class="badge byt">YT</span><a href="https://youtu.be/sPzc6hMg7So" target="_blank">CrewAI Crash Course (from roadmap)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">6.5 · Tools + Function Calling</p>
+      <h3>LangChain Tools + MCP Protocol</h3>
+      <ul class="res-list">
+        <li><span class="badge by">WEB</span><a href="https://learn.deeplearning.ai/courses/functions-tools-agents-langchain" target="_blank">Functions, Tools & Agents — DeepLearning.AI (free)</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://modelcontextprotocol.io/" target="_blank">MCP — Model Context Protocol (Anthropic)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">6.6 · Evaluation + Observability</p>
+      <h3>LangSmith + RAGAS + W&B</h3>
+      <ul class="res-list">
+        <li><span class="badge by">DOCS</span><a href="https://docs.smith.langchain.com/" target="_blank">LangSmith — tracing + evaluation for agents</a></li>
+        <li><span class="badge by">DOCS</span><a href="https://docs.ragas.io/" target="_blank">RAGAS — faithfulness, relevancy, precision, recall</a></li>
+        <li><span class="badge by">WEB</span><a href="https://wandb.ai/courses" target="_blank">Weights & Biases Courses — LLM evaluation (free)</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="card-label">6.7 · Security</p>
+      <h3>LLM Security — OWASP + Prompt Injection</h3>
+      <ul class="res-list">
+        <li><span class="badge by">WEB</span><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank">OWASP Top 10 for LLM Applications</a></li>
+        <li><span class="badge by">WEB</span><a href="https://simonwillison.net/2023/Apr/14/worst-of-both-worlds/" target="_blank">Prompt Injection Attacks — Simon Willison</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- AGENTIC MILESTONE -->
+  <div class="milestone">
+    <div class="milestone-header">
+      <div class="milestone-icon">🔥</div>
+      <div>
+        <div class="milestone-label">Project Milestone · P06 — Agentic AI</div>
+        <div class="milestone-title">Production-grade agentic systems — portfolio centerpieces</div>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="proj" style="--pc:var(--p6)">
+        <div class="proj-num">P06.1</div>
+        <div class="proj-title">AI Research Assistant That Cites Everything</div>
+        <div class="proj-hook">Agentic RAG that researches any topic using live web + your PDF library — refuses to say anything it can't cite.</div>
+        <div class="proj-tags"><span class="ptag">LangGraph</span><span class="ptag">CRAG</span><span class="ptag">hybrid search</span><span class="ptag">NLI grounding</span></div>
+        <div class="proj-what"><strong>Build:</strong> Query router (vector DB or web?) → hybrid BM25+dense retrieval → NLI faithfulness checker per claim → query rewriter (retry if fails) → every output sentence annotated with source. Evaluate with RAGAS.</div>
+        <div class="proj-skills"><span class="sk">LangGraph state machines</span><span class="sk">CRAG pattern</span><span class="sk">hybrid retrieval</span><span class="sk">RAGAS</span></div>
+        <div class="wow">⚡ Most "RAG systems" online are just a vector DB + a prompt. This is the real thing.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p6)">
+        <div class="proj-num">P06.2</div>
+        <div class="proj-title">Multi-Agent Code Reviewer on GitHub PRs</div>
+        <div class="proj-hook">4 specialized agents review your code — Security, Performance, Style, Synthesis — triggered by PR webhook.</div>
+        <div class="proj-tags"><span class="ptag">CrewAI</span><span class="ptag">multi-agent</span><span class="ptag">GitHub API</span><span class="ptag">AST parser</span></div>
+        <div class="proj-what"><strong>Build:</strong> SecurityAgent (SQL injection, secret leaks) + PerformanceAgent (O(n²), N+1 queries) + StyleAgent (PEP8) + SynthesisAgent → each has tools (AST parser, GitHub API, docs lookup) → GitHub webhook on PR open → structured JSON report → auto PR comment.</div>
+        <div class="proj-skills"><span class="sk">agent role design</span><span class="sk">tool definitions</span><span class="sk">inter-agent communication</span><span class="sk">webhook</span></div>
+        <div class="wow">⚡ Companies are building these internal tools right now. You'll use it on your own PRs.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p6)">
+        <div class="proj-num">P06.3</div>
+        <div class="proj-title">Autonomous Job Application Agent</div>
+        <div class="proj-hook">Scrapes job postings, tailors your CV per JD, writes cover letters, tracks applications — fully autonomous.</div>
+        <div class="proj-tags"><span class="ptag">LangGraph</span><span class="ptag">web scraping</span><span class="ptag">memory</span><span class="ptag">LangSmith</span></div>
+        <div class="proj-what"><strong>Build:</strong> Job scraper tool (Wuzzuf/LinkedIn) → relevance scorer (embedding similarity JD vs your profile) → CV tailoring node → cover letter generator → Postgres memory (applied jobs, follow-up dates) → LangSmith tracing.</div>
+        <div class="proj-skills"><span class="sk">agent memory</span><span class="sk">LangSmith observability</span><span class="sk">semantic similarity</span></div>
+        <div class="wow">⚡ You're building the tool that gets you hired while learning to build it.</div>
+      </div>
+      <div class="proj" style="--pc:var(--p6)">
+        <div class="proj-num">P06.4 · CAPSTONE</div>
+        <div class="proj-title">Arabic AI News Analyst</div>
+        <div class="proj-hook">Full-stack multi-agent system monitoring Arabic news 24/7 — detects trends, summarizes, fact-checks, delivers daily brief.</div>
+        <div class="proj-tags"><span class="ptag">multi-agent</span><span class="ptag">scheduled pipeline</span><span class="ptag">Arabic NLP</span><span class="ptag">full-stack</span><span class="ptag">production</span></div>
+        <div class="proj-what"><strong>Build:</strong> Collector crew (Al Jazeera, BBC Arabic, Masrawy hourly) + Analyst crew (topic clustering via embeddings, Arabic NER, sentiment shifts) + Reporter crew (Arabic + English brief, citation grounding, fact-checks). Full Docker Compose: Postgres + pgvector + Redis + FastAPI. GitHub Actions CI/CD. LangSmith monitoring. RAGAS weekly evals.</div>
+        <div class="proj-skills"><span class="sk">scheduled agents</span><span class="sk">vector clustering</span><span class="sk">Arabic NER</span><span class="sk">production deploy</span><span class="sk">full observability</span></div>
+        <div class="wow">⚡ Every single skill from every phase of this roadmap converges here. Show this at any interview.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ONGOING -->
+<div class="phase-section">
+  <span class="phase-anchor" id="ongoing"></span>
+  <div style="background:rgba(124,109,250,0.04);border:1px solid rgba(124,109,250,0.2);border-radius:10px;padding:20px 24px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--p1);letter-spacing:0.15em;margin-bottom:8px;">∞ ONGOING — RUNS IN BACKGROUND FOREVER</div>
+    <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">LeetCode Daily + Paper Reading + Kaggle</div>
+    <div style="font-size:12px;color:var(--muted);">15–30 min per day from Phase 01 onwards. 1 LeetCode problem (easy/medium). 1 paper per week from Phase 05. 1 Kaggle competition per phase from P03.</div>
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="https://leetcode.com/" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;background:rgba(124,109,250,0.1);border:1px solid rgba(124,109,250,0.3);color:var(--p1);border-radius:4px;text-decoration:none;">LeetCode</a>
+      <a href="https://neetcode.io/" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;background:rgba(124,109,250,0.1);border:1px solid rgba(124,109,250,0.3);color:var(--p1);border-radius:4px;text-decoration:none;">NeetCode</a>
+      <a href="https://paperswithcode.com/" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;background:rgba(124,109,250,0.1);border:1px solid rgba(124,109,250,0.3);color:var(--p1);border-radius:4px;text-decoration:none;">Papers With Code</a>
+      <a href="https://www.kaggle.com/competitions" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;background:rgba(124,109,250,0.1);border:1px solid rgba(124,109,250,0.3);color:var(--p1);border-radius:4px;text-decoration:none;">Kaggle</a>
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <div>Built for <span style="color:var(--accent)">Mennatullah</span> · June 2026 · All resources free · PyTorch-native</div>
+  <div style="color:var(--muted)">One complete pass. Move forward. Don't look back.</div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// highlight active sidebar item on scroll
+const anchors = document.querySelectorAll('.phase-anchor');
+const sbItems = document.querySelectorAll('.sb-item');
+window.addEventListener('scroll', () => {
+  let current = '';
+  anchors.forEach(a => {
+    if (window.scrollY >= a.offsetTop - 120) current = a.id;
+  });
+  sbItems.forEach(item => {
+    item.classList.remove('active');
+    if (item.getAttribute('href') === '#' + current) item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
