@@ -1,6 +1,6 @@
 # My AI Engineer Journey
 
-**Started: October 2024** | **Status: Ongoing** | [Live Roadmap HTML](mennatullah_ai_roadmap.html)
+**Started: October 2024** | **Status: Ongoing** | [Live Roadmap HTML]([mennatullah_ai_roadmap.html](https://github.com/AI-progress-log/.github/blob/main/profile/mennatullah_roadmap.html))
 
 ## Progress Highlights
 - **Oct–Nov 2024**: Cisco Python + Git foundations.
